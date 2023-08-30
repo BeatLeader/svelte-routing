@@ -28,8 +28,6 @@
             if (c.toString().startsWith("class ")) component = c;
             else component = c();
         }
-
-        canUseDOM() && window?.scrollTo(0, 0);
     }
 
     registerRoute(route);
