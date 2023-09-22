@@ -1,6 +1,6 @@
 <script>
     import { getContext, onDestroy } from "svelte";
-    import { ROUTER } from "./contexts.js";
+    import { ROUTER, LOCATION } from "./contexts.js";
     import { canUseDOM } from "./utils.js";
 
     export let path = "";
@@ -10,6 +10,7 @@
     let routeProps = {};
 
     const { registerRoute, unregisterRoute, activeRoute } = getContext(ROUTER);
+    const location = getContext(LOCATION);
 
     const route = {
         path,
@@ -44,11 +45,12 @@
         {#await component then resolvedComponent}
             <svelte:component
                 this={resolvedComponent?.default || resolvedComponent}
+                location={$location}
                 {...routeParams}
                 {...routeProps}
             />
         {/await}
     {:else}
-        <slot params={routeParams} />
+        <slot params={routeParams} location={$location} />
     {/if}
 {/if}
